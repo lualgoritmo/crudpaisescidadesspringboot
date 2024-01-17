@@ -1,6 +1,6 @@
 package com.luciano.paisesecidades.controller.dto
 
-data class CountryWithStatesDTO(
+data class ResponseCountryWithStatesDTO(
     val name: String,
     val states: List<StateDTO>
 )

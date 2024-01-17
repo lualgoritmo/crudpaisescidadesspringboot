@@ -1,6 +1,6 @@
 package com.luciano.paisesecidades.service.impl
 
-import com.luciano.paisesecidades.controller.dto.CountryWithStatesDTO
+import com.luciano.paisesecidades.controller.dto.ResponseCountryWithStatesDTO
 import com.luciano.paisesecidades.controller.dto.StateDTO
 import com.luciano.paisesecidades.extension.CountryNotFoundException
 import com.luciano.paisesecidades.model.Country
@@ -23,10 +23,10 @@ class CountryServiceImpl(
     }
 
     @Transactional
-    override fun getAllCountriesWithStates(): List<CountryWithStatesDTO> {
+    override fun getAllCountriesWithStates(): List<ResponseCountryWithStatesDTO> {
         val countries = countryRepository.findAllWithStates()
         return countries.map { country ->
-            CountryWithStatesDTO(
+            ResponseCountryWithStatesDTO(
                 name = country.name,
                 states = country.states.map { state ->
                     StateDTO(

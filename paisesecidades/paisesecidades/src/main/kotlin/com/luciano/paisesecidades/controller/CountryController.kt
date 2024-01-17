@@ -1,6 +1,6 @@
 package com.luciano.paisesecidades.controller
 
-import com.luciano.paisesecidades.controller.dto.CountryWithStatesDTO
+import com.luciano.paisesecidades.controller.dto.ResponseCountryWithStatesDTO
 import com.luciano.paisesecidades.controller.dto.CreateCountryDTO
 import com.luciano.paisesecidades.extension.CountryNotFoundException
 import com.luciano.paisesecidades.model.Country
@@ -36,7 +36,7 @@ class CountryController(private val countryServiceImpl: CountryService) {
 
     @GetMapping("/countriestate")
     @ResponseStatus(HttpStatus.OK)
-    fun getAllCountriesWithStates(): List<CountryWithStatesDTO> = countryServiceImpl.getAllCountriesWithStates()
+    fun getAllCountriesWithStates(): List<ResponseCountryWithStatesDTO> = countryServiceImpl.getAllCountriesWithStates()
 
     @GetMapping("/{idCountry}")
     @ResponseStatus(HttpStatus.OK)
