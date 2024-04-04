@@ -4,7 +4,7 @@ import com.luciano.paisesecidades.model.Country
 import com.luciano.paisesecidades.util.UniqueValue
 
 
-data class CreateCountryDTO(
+data class RequireCountryDTO(
     @field:UniqueValue(
         message = "Esse País já existe!",
         fieldName = "name",
@@ -15,6 +15,6 @@ data class CreateCountryDTO(
     fun toEntity() = Country(idCountry = 0, name = this.name)
 
     companion object {
-        fun fromEntity(country: Country) = CreateCountryDTO(name = country.name)
+        fun fromEntity(country: Country) = RequireCountryDTO(name = country.name)
     }
 }

@@ -25,18 +25,17 @@ class CountryServiceImpl(
     @Transactional
     override fun getAllCountriesWithStates(): List<ResponseCountryWithStatesDTO> {
         val countries = countryRepository.findAllWithStates()
-        return countries.map { country ->
-            ResponseCountryWithStatesDTO(
-                name = country.name,
-                states = country.states.map { state ->
+        return countries.map {ResponseCountryWithStatesDTO(
+                name = it.name,
+                states = it.states.map { state ->
                     StateDTO(
                         name = state.name
                     )
                 }
             )
         }
-    }
 
+    }
     @Transactional
     override fun updateWithIdCountry(idCountry: Long, updateCountry: Country): Country {
         val existingCountry = countryRepository.findById(idCountry).orElseThrow {
@@ -48,7 +47,6 @@ class CountryServiceImpl(
         )
         return countryRepository.save(newCountry)
     }
-
     @Transactional
     override fun deleteWithIdContry(idCountry: Long) {
         try {

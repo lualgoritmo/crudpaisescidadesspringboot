@@ -1,7 +1,7 @@
 package com.luciano.paisesecidades.controller
 
 import com.luciano.paisesecidades.controller.dto.ResponseCountryWithStatesDTO
-import com.luciano.paisesecidades.controller.dto.CreateCountryDTO
+import com.luciano.paisesecidades.controller.dto.RequireCountryDTO
 import com.luciano.paisesecidades.extension.CountryNotFoundException
 import com.luciano.paisesecidades.model.Country
 import com.luciano.paisesecidades.service.CountryService
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*
 class CountryController(private val countryServiceImpl: CountryService) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createCountry(@RequestBody @Valid createCountryDTO: CreateCountryDTO): CreateCountryDTO {
+    fun createCountry(@RequestBody @Valid createCountryDTO: RequireCountryDTO): RequireCountryDTO {
         val country: Country = countryServiceImpl.createCountrie(createCountryDTO.toEntity())
         try {
-            return CreateCountryDTO.fromEntity(country)
+            return RequireCountryDTO.fromEntity(country)
         } catch (ex: MethodArgumentNotValidException) {
             throw ex
         }
@@ -26,12 +26,12 @@ class CountryController(private val countryServiceImpl: CountryService) {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun getAllCountrys(): List<CreateCountryDTO> {
+    fun getAllCountrys(): List<RequireCountryDTO> {
         val countryList: List<Country> = countryServiceImpl.getAllCountries()
         if (countryList.isEmpty()) {
             println(" Lista de Countries vazia")
         }
-        return countryList.map { CreateCountryDTO.fromEntity(it) }.toList()
+        return countryList.map { RequireCountryDTO.fromEntity(it) }.toList()
     }
 
     @GetMapping("/countriestate")
@@ -40,10 +40,10 @@ class CountryController(private val countryServiceImpl: CountryService) {
 
     @GetMapping("/{idCountry}")
     @ResponseStatus(HttpStatus.OK)
-    fun getByIdCountry(@PathVariable idCountry: Long): CreateCountryDTO {
+    fun getByIdCountry(@PathVariable idCountry: Long): RequireCountryDTO {
         try {
             val country: Country = countryServiceImpl.getWithIdCountry(idCountry)
-            return CreateCountryDTO.fromEntity(country)
+            return RequireCountryDTO.fromEntity(country)
         } catch (ex: CountryNotFoundException) {
             throw ex
         }
@@ -53,10 +53,10 @@ class CountryController(private val countryServiceImpl: CountryService) {
     @ResponseStatus(HttpStatus.OK)
     fun updateWithIdCountry(
         @PathVariable idCountry: Long,
-        @RequestBody @Valid updateCountryDTO: CreateCountryDTO
-    ): CreateCountryDTO {
+        @RequestBody @Valid updateCountryDTO: RequireCountryDTO
+    ): RequireCountryDTO {
         val country: Country = countryServiceImpl.updateWithIdCountry(idCountry, updateCountryDTO.toEntity())
-        return CreateCountryDTO.fromEntity(country)
+        return RequireCountryDTO.fromEntity(country)
     }
 
     @DeleteMapping("/{idCountry}")
